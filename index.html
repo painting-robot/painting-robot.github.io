@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-QR444NHQV7"></script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Painting Robot</title>
@@ -11,8 +12,8 @@
       --fg: #1a1a1a;
       --muted: #666666;
       --line: #dddddd;
-      --accent: #e6e6e6;
-      --accent-hover: #d0d0d0;
+      --accent: #2563eb;
+      --accent-hover: #1d4ed8;
       color-scheme: light;
     }
     * { box-sizing: border-box; }
@@ -31,6 +32,9 @@
     h2 { font-size: 1.3rem; font-weight: 600; margin: 56px 0 8px; }
     h3 { font-size: 1rem; font-weight: 600; margin: 32px 0 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; }
     section > p { margin: 0 0 16px; color: var(--muted); }
+    .conditions { margin: -8px 0 16px; padding-left: 22px; color: var(--muted); }
+    .conditions li { margin: 2px 0; }
+    .conditions strong { color: var(--fg); font-weight: 600; }
     video { display: block; width: 100%; height: auto; background: #000; border-radius: 4px; }
     .grid { display: grid; gap: 12px; }
     .grid img { width: 100%; height: auto; display: block; background: #fff; border: 1px solid var(--line); border-radius: 3px; }
@@ -44,19 +48,11 @@
     /* Prompt-design grid */
     .matrix {
       display: grid;
-      grid-template-columns: auto auto auto minmax(0, 1fr) auto;
-      grid-template-areas: "prev yt yk tiles next" ". . . xk ." ". . . xt .";
+      grid-template-columns: auto auto minmax(0, 1fr);
+      grid-template-areas: "yt yk tiles" ". . xk" ". . xt";
       column-gap: 10px; row-gap: 6px;
-      max-width: 800px; margin: 0 auto;
+      max-width: 720px; margin: 0 auto;
     }
-    .matrix button {
-      align-self: stretch; width: 36px; padding: 0;
-      font: inherit; font-size: 1.2rem; line-height: 1;
-      background: var(--accent); color: var(--fg); border: 1px solid var(--accent); border-radius: 4px; cursor: pointer;
-    }
-    .matrix button:hover { background: var(--accent-hover); border-color: var(--accent-hover); }
-    .matrix #grid-prev { grid-area: prev; }
-    .matrix #grid-next { grid-area: next; }
     .matrix .y-title { grid-area: yt; writing-mode: vertical-rl; transform: rotate(180deg); text-align: center; font-weight: 600; font-size: 1.15rem; }
     .matrix .x-title { grid-area: xt; text-align: center; font-weight: 600; font-size: 1.15rem; }
     .matrix .y-ticks { grid-area: yk; display: grid; grid-template-rows: repeat(3, minmax(0, 1fr)); gap: 8px; font-size: 1.05rem; color: var(--muted); }
@@ -64,9 +60,14 @@
     .matrix .x-ticks { grid-area: xk; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; text-align: center; font-size: 1.05rem; color: var(--muted); }
     .matrix .tiles { grid-area: tiles; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
     .matrix .tiles img { width: 100%; height: auto; display: block; background: #fff; border: 1px solid var(--line); border-radius: 3px; }
-    .grid-nav { text-align: center; margin-top: 12px; color: var(--muted); font-variant-numeric: tabular-nums; }
+    .grid-nav { display: flex; align-items: center; justify-content: center; gap: 16px; margin-top: 16px; }
+    .grid-nav button { font: inherit; font-size: 0.95rem; padding: 6px 16px; background: var(--accent); color: #fff; border: 1px solid var(--accent); border-radius: 4px; cursor: pointer; }
+    .grid-nav button:hover { background: var(--accent-hover); border-color: var(--accent-hover); }
+    .grid-nav span { color: var(--muted); font-variant-numeric: tabular-nums; }
     /* Hover-to-replay progression on the online drawings */
     .prog { position: relative; margin: 0; cursor: pointer; }
+    .stroke-human { color: rgb(40, 40, 200); font-weight: 600; }
+    .stroke-agent { color: rgb(200, 40, 40); font-weight: 600; }
     .prog .frame { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 0.35s ease; pointer-events: none; }
     a { color: inherit; text-decoration: underline; text-decoration-color: var(--line); text-underline-offset: 3px; }
     a:hover { text-decoration-color: var(--fg); }
@@ -92,7 +93,6 @@
     <h2>Describing Agent Behavior Via Prompt Design</h2>
     <p>To describe a range of behaviors, we rely on intentional visual/semantic dissonance/congruence to provoke lateral problem-solving and break creative fixation.</p>
     <div class="matrix">
-      <button type="button" id="grid-prev" aria-label="Previous participant">&larr;</button>
       <div class="y-title">Visual</div>
       <div class="y-ticks"><span>different</span><span>neutral</span><span>similar</span></div>
       <div class="tiles">
@@ -106,15 +106,20 @@
         <img src="assets/grid/p1_visual-similar_semantic-neutral.png" alt="Visual similar, semantic neutral" width="340" height="440">
         <img src="assets/grid/p1_visual-similar_semantic-different.png" alt="Visual similar, semantic different" width="340" height="440">
       </div>
-      <button type="button" id="grid-next" aria-label="Next participant">&rarr;</button>
       <div class="x-ticks"><span>similar</span><span>neutral</span><span>different</span></div>
       <div class="x-title">Semantic</div>
     </div>
-    <div class="grid-nav"><span id="grid-counter">1 / 6</span></div>
+    <div class="grid-nav">
+      <button type="button" id="grid-prev" aria-label="Previous participant">&larr; Prev</button>
+      <span id="grid-counter">1 / 6</span>
+      <button type="button" id="grid-next" aria-label="Next participant">Next &rarr;</button>
+    </div>
   </section>
 
   <section id="in-person">
     <h2>Co-drawing Outputs from the Physical Robot Agent</h2>
+    <p>With four focused group participants, we asked them to draw an open collaborative landscape drawing over alternating turns. Particpants were given various drawing implements such as color sharpie, highlighters, pencil.
+</p>
     <div class="grid in-person">
       <img src="assets/in-person/p1_1.jpg" alt="Co-drawing with the physical robot" width="1035" height="1600" loading="lazy">
       <img src="assets/in-person/p1_2.jpg" alt="Co-drawing with the physical robot" width="1035" height="1600" loading="lazy">
@@ -129,7 +134,13 @@
 
   <section id="online">
     <h2>Co-drawing Output with Online Agent</h2>
-    <p>Hover over a drawing (tap on a touch screen) to replay how it was made: blue strokes are the participant's, red strokes are the agent's.</p>
+    <p>With twenty particpants, we performed preliminary study using browser-based painting app with tablet and stylus.</p>
+    <p>Conditions:</p>
+    <ul class="conditions">
+      <li><strong>Adversarial:</strong> Agent introduces high visual and conceptual divergence (visually, semantically different).</li>
+      <li><strong>Collaborative:</strong> Agent matches user style and theme (visually, semantically similar)</li>
+    </ul>
+    <p>Hover over a drawing (tap on a touch screen) to replay how it was made. <span class="stroke-human">Blue strokes</span>: participant's. <span class="stroke-agent">Red strokes</span>: co-drawing agent's.</p>
 
     <h3>Adversarial</h3>
     <div class="grid online">
@@ -163,7 +174,7 @@
       <figure class="prog"><img src="assets/online/adversarial/28.png" alt="Robot drawing (adversarial)" width="340" height="440" loading="lazy"></figure>
     </div>
 
-    <h3>Control</h3>
+    <h3>Collaborative</h3>
     <div class="grid online">
       <figure class="prog"><img src="assets/online/control/01.png" alt="Robot drawing (control)" width="340" height="440" loading="lazy"></figure>
       <figure class="prog"><img src="assets/online/control/02.png" alt="Robot drawing (control)" width="340" height="440" loading="lazy"></figure>
