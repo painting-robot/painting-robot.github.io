@@ -9,6 +9,7 @@ robot turn from the online sessions (adversarial vs. control).
 index.html          the page (plain HTML + CSS, no build step, no JS)
 assets/             web-ready copies, committed
   video/            compressed video (~14 MB, 720p) + poster frame
+  poster.pdf        conference poster, flattened to one JPEG page (56 MB -> ~4 MB)
   in-person/        scans resized to 1600 px
   online/{adversarial,control}/NN.png   turn_2_robot.png, renumbered
   online/{adversarial,control}/NN/     six raw/ progression frames shown on hover
@@ -18,8 +19,8 @@ build_assets.sh     regenerates assets/ from static/
 ```
 
 `static/` stays out of the repo on purpose: the original video is 102 MB
-(GitHub rejects files over 100 MB) and the online folders are named after
-participants.
+(GitHub rejects files over 100 MB), the original poster is 56 MB, and the
+online folders are named after participants.
 
 ## Deploy to GitHub Pages
 

@@ -20,6 +20,15 @@ mkdir -p assets/video
 ffmpeg -y -loglevel error -ss 3 -i static/iros-painting-robot.mp4 \
   -frames:v 1 -vf "scale=1280:-2" -q:v 3 assets/video/poster.jpg
 
+# 1b. Poster: the exported PDF is a 200 in wide page with ~330k vector path
+#     segments and 136 masked images, which browser viewers render very slowly.
+#     Flatten it to one JPEG (~7200 px wide) and wrap that, untouched, in a
+#     single-page PDF at quarter scale (~50 x 35 in). 56 MB -> ~4 MB.
+pdftoppm -jpeg -r 36 -jpegopt quality=85,optimize=y -singlefile \
+  static/poster.pdf assets/poster-flat
+python3 jpeg2pdf.py assets/poster-flat.jpg assets/poster.pdf 3606
+rm assets/poster-flat.jpg
+
 # 2. In-person drawings: shrink scans to 1600 px on the long edge.
 rm -rf assets/in-person && mkdir -p assets/in-person
 for f in static/in-person/*.jpg; do
