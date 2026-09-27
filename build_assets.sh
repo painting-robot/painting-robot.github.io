@@ -34,7 +34,15 @@ for cond in adversarial control; do
   i=0
   while IFS= read -r -d '' f; do
     i=$((i + 1))
-    cp "$f" "$(printf 'assets/online/%s/%02d.png' "$cond" "$i")"
+    nn=$(printf '%02d' "$i")
+    cp "$f" "assets/online/$cond/$nn.png"
+    # Progression frames from raw/: participant strokes blue, agent strokes red.
+    mkdir -p "assets/online/$cond/$nn"
+    for t in 0 1 2; do
+      for who in human robot; do
+        cp "$(dirname "$f")/raw/turn_${t}_${who}.png" "assets/online/$cond/$nn/turn_${t}_${who}.png"
+      done
+    done
   done < <(find "static/online" -path "*/${cond}_*" -name turn_2_robot.png \
              -not -path "*/raw/*" -print0 | sort -z)
   echo "$cond: $i drawings"

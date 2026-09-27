@@ -11,6 +11,7 @@ assets/             web-ready copies, committed
   video/            compressed video (~14 MB, 720p) + poster frame
   in-person/        scans resized to 1600 px
   online/{adversarial,control}/NN.png   turn_2_robot.png, renumbered
+  online/{adversarial,control}/NN/     six raw/ progression frames shown on hover
   grid/pN_visual-V_semantic-S.png     3x3 prompt-design tiles per participant
 static/             raw material, NOT committed (.gitignore)
 build_assets.sh     regenerates assets/ from static/

@@ -65,6 +65,9 @@
     .matrix .tiles { grid-area: tiles; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
     .matrix .tiles img { width: 100%; height: auto; display: block; background: #fff; border: 1px solid var(--line); border-radius: 3px; }
     .grid-nav { text-align: center; margin-top: 12px; color: var(--muted); font-variant-numeric: tabular-nums; }
+    /* Hover-to-replay progression on the online drawings */
+    .prog { position: relative; margin: 0; cursor: pointer; }
+    .prog .frame { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 0.35s ease; pointer-events: none; }
     a { color: inherit; text-decoration: underline; text-decoration-color: var(--line); text-underline-offset: 3px; }
     a:hover { text-decoration-color: var(--fg); }
   </style>
@@ -112,7 +115,6 @@
 
   <section id="in-person">
     <h2>Co-drawing Outputs from the Physical Robot Agent</h2>
-    <p>Co-drawings made in person: participants and a robot arm took turns drawing on the same sheet of paper.</p>
     <div class="grid in-person">
       <img src="assets/in-person/p1_1.jpg" alt="Co-drawing with the physical robot" width="1035" height="1600" loading="lazy">
       <img src="assets/in-person/p1_2.jpg" alt="Co-drawing with the physical robot" width="1035" height="1600" loading="lazy">
@@ -127,70 +129,70 @@
 
   <section id="online">
     <h2>Co-drawing Output with Online Agent</h2>
-    <p>Final canvases after two rounds of turn-taking with a vision-language-model agent. In the adversarial condition the agent tried to steer the drawing away from the participant's intent; in the control condition it did not.</p>
+    <p>Hover over a drawing (tap on a touch screen) to replay how it was made: blue strokes are the participant's, red strokes are the agent's.</p>
 
     <h3>Adversarial</h3>
     <div class="grid online">
-      <img src="assets/online/adversarial/01.png" alt="Robot drawing (adversarial)" width="340" height="440" loading="lazy">
-      <img src="assets/online/adversarial/02.png" alt="Robot drawing (adversarial)" width="340" height="440" loading="lazy">
-      <img src="assets/online/adversarial/03.png" alt="Robot drawing (adversarial)" width="340" height="440" loading="lazy">
-      <img src="assets/online/adversarial/04.png" alt="Robot drawing (adversarial)" width="340" height="440" loading="lazy">
-      <img src="assets/online/adversarial/05.png" alt="Robot drawing (adversarial)" width="340" height="440" loading="lazy">
-      <img src="assets/online/adversarial/06.png" alt="Robot drawing (adversarial)" width="340" height="440" loading="lazy">
-      <img src="assets/online/adversarial/07.png" alt="Robot drawing (adversarial)" width="340" height="440" loading="lazy">
-      <img src="assets/online/adversarial/08.png" alt="Robot drawing (adversarial)" width="340" height="440" loading="lazy">
-      <img src="assets/online/adversarial/09.png" alt="Robot drawing (adversarial)" width="340" height="440" loading="lazy">
-      <img src="assets/online/adversarial/10.png" alt="Robot drawing (adversarial)" width="340" height="440" loading="lazy">
-      <img src="assets/online/adversarial/11.png" alt="Robot drawing (adversarial)" width="340" height="440" loading="lazy">
-      <img src="assets/online/adversarial/12.png" alt="Robot drawing (adversarial)" width="340" height="440" loading="lazy">
-      <img src="assets/online/adversarial/13.png" alt="Robot drawing (adversarial)" width="340" height="440" loading="lazy">
-      <img src="assets/online/adversarial/14.png" alt="Robot drawing (adversarial)" width="340" height="440" loading="lazy">
-      <img src="assets/online/adversarial/15.png" alt="Robot drawing (adversarial)" width="340" height="440" loading="lazy">
-      <img src="assets/online/adversarial/16.png" alt="Robot drawing (adversarial)" width="340" height="440" loading="lazy">
-      <img src="assets/online/adversarial/17.png" alt="Robot drawing (adversarial)" width="340" height="440" loading="lazy">
-      <img src="assets/online/adversarial/18.png" alt="Robot drawing (adversarial)" width="340" height="440" loading="lazy">
-      <img src="assets/online/adversarial/19.png" alt="Robot drawing (adversarial)" width="340" height="440" loading="lazy">
-      <img src="assets/online/adversarial/20.png" alt="Robot drawing (adversarial)" width="340" height="440" loading="lazy">
-      <img src="assets/online/adversarial/21.png" alt="Robot drawing (adversarial)" width="340" height="440" loading="lazy">
-      <img src="assets/online/adversarial/22.png" alt="Robot drawing (adversarial)" width="340" height="440" loading="lazy">
-      <img src="assets/online/adversarial/23.png" alt="Robot drawing (adversarial)" width="340" height="440" loading="lazy">
-      <img src="assets/online/adversarial/24.png" alt="Robot drawing (adversarial)" width="340" height="440" loading="lazy">
-      <img src="assets/online/adversarial/25.png" alt="Robot drawing (adversarial)" width="340" height="440" loading="lazy">
-      <img src="assets/online/adversarial/26.png" alt="Robot drawing (adversarial)" width="340" height="440" loading="lazy">
-      <img src="assets/online/adversarial/27.png" alt="Robot drawing (adversarial)" width="340" height="440" loading="lazy">
-      <img src="assets/online/adversarial/28.png" alt="Robot drawing (adversarial)" width="340" height="440" loading="lazy">
+      <figure class="prog"><img src="assets/online/adversarial/01.png" alt="Robot drawing (adversarial)" width="340" height="440" loading="lazy"></figure>
+      <figure class="prog"><img src="assets/online/adversarial/02.png" alt="Robot drawing (adversarial)" width="340" height="440" loading="lazy"></figure>
+      <figure class="prog"><img src="assets/online/adversarial/03.png" alt="Robot drawing (adversarial)" width="340" height="440" loading="lazy"></figure>
+      <figure class="prog"><img src="assets/online/adversarial/04.png" alt="Robot drawing (adversarial)" width="340" height="440" loading="lazy"></figure>
+      <figure class="prog"><img src="assets/online/adversarial/05.png" alt="Robot drawing (adversarial)" width="340" height="440" loading="lazy"></figure>
+      <figure class="prog"><img src="assets/online/adversarial/06.png" alt="Robot drawing (adversarial)" width="340" height="440" loading="lazy"></figure>
+      <figure class="prog"><img src="assets/online/adversarial/07.png" alt="Robot drawing (adversarial)" width="340" height="440" loading="lazy"></figure>
+      <figure class="prog"><img src="assets/online/adversarial/08.png" alt="Robot drawing (adversarial)" width="340" height="440" loading="lazy"></figure>
+      <figure class="prog"><img src="assets/online/adversarial/09.png" alt="Robot drawing (adversarial)" width="340" height="440" loading="lazy"></figure>
+      <figure class="prog"><img src="assets/online/adversarial/10.png" alt="Robot drawing (adversarial)" width="340" height="440" loading="lazy"></figure>
+      <figure class="prog"><img src="assets/online/adversarial/11.png" alt="Robot drawing (adversarial)" width="340" height="440" loading="lazy"></figure>
+      <figure class="prog"><img src="assets/online/adversarial/12.png" alt="Robot drawing (adversarial)" width="340" height="440" loading="lazy"></figure>
+      <figure class="prog"><img src="assets/online/adversarial/13.png" alt="Robot drawing (adversarial)" width="340" height="440" loading="lazy"></figure>
+      <figure class="prog"><img src="assets/online/adversarial/14.png" alt="Robot drawing (adversarial)" width="340" height="440" loading="lazy"></figure>
+      <figure class="prog"><img src="assets/online/adversarial/15.png" alt="Robot drawing (adversarial)" width="340" height="440" loading="lazy"></figure>
+      <figure class="prog"><img src="assets/online/adversarial/16.png" alt="Robot drawing (adversarial)" width="340" height="440" loading="lazy"></figure>
+      <figure class="prog"><img src="assets/online/adversarial/17.png" alt="Robot drawing (adversarial)" width="340" height="440" loading="lazy"></figure>
+      <figure class="prog"><img src="assets/online/adversarial/18.png" alt="Robot drawing (adversarial)" width="340" height="440" loading="lazy"></figure>
+      <figure class="prog"><img src="assets/online/adversarial/19.png" alt="Robot drawing (adversarial)" width="340" height="440" loading="lazy"></figure>
+      <figure class="prog"><img src="assets/online/adversarial/20.png" alt="Robot drawing (adversarial)" width="340" height="440" loading="lazy"></figure>
+      <figure class="prog"><img src="assets/online/adversarial/21.png" alt="Robot drawing (adversarial)" width="340" height="440" loading="lazy"></figure>
+      <figure class="prog"><img src="assets/online/adversarial/22.png" alt="Robot drawing (adversarial)" width="340" height="440" loading="lazy"></figure>
+      <figure class="prog"><img src="assets/online/adversarial/23.png" alt="Robot drawing (adversarial)" width="340" height="440" loading="lazy"></figure>
+      <figure class="prog"><img src="assets/online/adversarial/24.png" alt="Robot drawing (adversarial)" width="340" height="440" loading="lazy"></figure>
+      <figure class="prog"><img src="assets/online/adversarial/25.png" alt="Robot drawing (adversarial)" width="340" height="440" loading="lazy"></figure>
+      <figure class="prog"><img src="assets/online/adversarial/26.png" alt="Robot drawing (adversarial)" width="340" height="440" loading="lazy"></figure>
+      <figure class="prog"><img src="assets/online/adversarial/27.png" alt="Robot drawing (adversarial)" width="340" height="440" loading="lazy"></figure>
+      <figure class="prog"><img src="assets/online/adversarial/28.png" alt="Robot drawing (adversarial)" width="340" height="440" loading="lazy"></figure>
     </div>
 
     <h3>Control</h3>
     <div class="grid online">
-      <img src="assets/online/control/01.png" alt="Robot drawing (control)" width="340" height="440" loading="lazy">
-      <img src="assets/online/control/02.png" alt="Robot drawing (control)" width="340" height="440" loading="lazy">
-      <img src="assets/online/control/03.png" alt="Robot drawing (control)" width="340" height="440" loading="lazy">
-      <img src="assets/online/control/04.png" alt="Robot drawing (control)" width="340" height="440" loading="lazy">
-      <img src="assets/online/control/05.png" alt="Robot drawing (control)" width="340" height="440" loading="lazy">
-      <img src="assets/online/control/06.png" alt="Robot drawing (control)" width="340" height="440" loading="lazy">
-      <img src="assets/online/control/07.png" alt="Robot drawing (control)" width="340" height="440" loading="lazy">
-      <img src="assets/online/control/08.png" alt="Robot drawing (control)" width="340" height="440" loading="lazy">
-      <img src="assets/online/control/09.png" alt="Robot drawing (control)" width="340" height="440" loading="lazy">
-      <img src="assets/online/control/10.png" alt="Robot drawing (control)" width="340" height="440" loading="lazy">
-      <img src="assets/online/control/11.png" alt="Robot drawing (control)" width="340" height="440" loading="lazy">
-      <img src="assets/online/control/12.png" alt="Robot drawing (control)" width="340" height="440" loading="lazy">
-      <img src="assets/online/control/13.png" alt="Robot drawing (control)" width="340" height="440" loading="lazy">
-      <img src="assets/online/control/14.png" alt="Robot drawing (control)" width="340" height="440" loading="lazy">
-      <img src="assets/online/control/15.png" alt="Robot drawing (control)" width="340" height="440" loading="lazy">
-      <img src="assets/online/control/16.png" alt="Robot drawing (control)" width="340" height="440" loading="lazy">
-      <img src="assets/online/control/17.png" alt="Robot drawing (control)" width="340" height="440" loading="lazy">
-      <img src="assets/online/control/18.png" alt="Robot drawing (control)" width="340" height="440" loading="lazy">
-      <img src="assets/online/control/19.png" alt="Robot drawing (control)" width="340" height="440" loading="lazy">
-      <img src="assets/online/control/20.png" alt="Robot drawing (control)" width="340" height="440" loading="lazy">
-      <img src="assets/online/control/21.png" alt="Robot drawing (control)" width="340" height="440" loading="lazy">
-      <img src="assets/online/control/22.png" alt="Robot drawing (control)" width="340" height="440" loading="lazy">
-      <img src="assets/online/control/23.png" alt="Robot drawing (control)" width="340" height="440" loading="lazy">
-      <img src="assets/online/control/24.png" alt="Robot drawing (control)" width="340" height="440" loading="lazy">
-      <img src="assets/online/control/25.png" alt="Robot drawing (control)" width="340" height="440" loading="lazy">
-      <img src="assets/online/control/26.png" alt="Robot drawing (control)" width="340" height="440" loading="lazy">
-      <img src="assets/online/control/27.png" alt="Robot drawing (control)" width="340" height="440" loading="lazy">
-      <img src="assets/online/control/28.png" alt="Robot drawing (control)" width="340" height="440" loading="lazy">
+      <figure class="prog"><img src="assets/online/control/01.png" alt="Robot drawing (control)" width="340" height="440" loading="lazy"></figure>
+      <figure class="prog"><img src="assets/online/control/02.png" alt="Robot drawing (control)" width="340" height="440" loading="lazy"></figure>
+      <figure class="prog"><img src="assets/online/control/03.png" alt="Robot drawing (control)" width="340" height="440" loading="lazy"></figure>
+      <figure class="prog"><img src="assets/online/control/04.png" alt="Robot drawing (control)" width="340" height="440" loading="lazy"></figure>
+      <figure class="prog"><img src="assets/online/control/05.png" alt="Robot drawing (control)" width="340" height="440" loading="lazy"></figure>
+      <figure class="prog"><img src="assets/online/control/06.png" alt="Robot drawing (control)" width="340" height="440" loading="lazy"></figure>
+      <figure class="prog"><img src="assets/online/control/07.png" alt="Robot drawing (control)" width="340" height="440" loading="lazy"></figure>
+      <figure class="prog"><img src="assets/online/control/08.png" alt="Robot drawing (control)" width="340" height="440" loading="lazy"></figure>
+      <figure class="prog"><img src="assets/online/control/09.png" alt="Robot drawing (control)" width="340" height="440" loading="lazy"></figure>
+      <figure class="prog"><img src="assets/online/control/10.png" alt="Robot drawing (control)" width="340" height="440" loading="lazy"></figure>
+      <figure class="prog"><img src="assets/online/control/11.png" alt="Robot drawing (control)" width="340" height="440" loading="lazy"></figure>
+      <figure class="prog"><img src="assets/online/control/12.png" alt="Robot drawing (control)" width="340" height="440" loading="lazy"></figure>
+      <figure class="prog"><img src="assets/online/control/13.png" alt="Robot drawing (control)" width="340" height="440" loading="lazy"></figure>
+      <figure class="prog"><img src="assets/online/control/14.png" alt="Robot drawing (control)" width="340" height="440" loading="lazy"></figure>
+      <figure class="prog"><img src="assets/online/control/15.png" alt="Robot drawing (control)" width="340" height="440" loading="lazy"></figure>
+      <figure class="prog"><img src="assets/online/control/16.png" alt="Robot drawing (control)" width="340" height="440" loading="lazy"></figure>
+      <figure class="prog"><img src="assets/online/control/17.png" alt="Robot drawing (control)" width="340" height="440" loading="lazy"></figure>
+      <figure class="prog"><img src="assets/online/control/18.png" alt="Robot drawing (control)" width="340" height="440" loading="lazy"></figure>
+      <figure class="prog"><img src="assets/online/control/19.png" alt="Robot drawing (control)" width="340" height="440" loading="lazy"></figure>
+      <figure class="prog"><img src="assets/online/control/20.png" alt="Robot drawing (control)" width="340" height="440" loading="lazy"></figure>
+      <figure class="prog"><img src="assets/online/control/21.png" alt="Robot drawing (control)" width="340" height="440" loading="lazy"></figure>
+      <figure class="prog"><img src="assets/online/control/22.png" alt="Robot drawing (control)" width="340" height="440" loading="lazy"></figure>
+      <figure class="prog"><img src="assets/online/control/23.png" alt="Robot drawing (control)" width="340" height="440" loading="lazy"></figure>
+      <figure class="prog"><img src="assets/online/control/24.png" alt="Robot drawing (control)" width="340" height="440" loading="lazy"></figure>
+      <figure class="prog"><img src="assets/online/control/25.png" alt="Robot drawing (control)" width="340" height="440" loading="lazy"></figure>
+      <figure class="prog"><img src="assets/online/control/26.png" alt="Robot drawing (control)" width="340" height="440" loading="lazy"></figure>
+      <figure class="prog"><img src="assets/online/control/27.png" alt="Robot drawing (control)" width="340" height="440" loading="lazy"></figure>
+      <figure class="prog"><img src="assets/online/control/28.png" alt="Robot drawing (control)" width="340" height="440" loading="lazy"></figure>
     </div>
   </section>
 </main>
@@ -214,6 +216,41 @@
 
   // Preload every participant's tiles so switching is instant.
   for (let p = 1; p <= N; p++) V.forEach(v => S.forEach(s => { new Image().src = src(p, v, s); }));
+})();
+
+// Online drawings: on hover, fade in each turn in order, then settle on the final drawing.
+(function () {
+  const FRAMES = ['turn_0_human', 'turn_0_robot', 'turn_1_human', 'turn_1_robot', 'turn_2_human', 'turn_2_robot'];
+  const STEP_MS = 700;   // how long each frame is held before the next fades in
+  const sleep = ms => new Promise(r => setTimeout(r, ms));
+  const loaded = im => im.complete ? Promise.resolve() : new Promise(r => { im.onload = im.onerror = r; });
+  document.querySelectorAll('.prog').forEach(fig => {
+    const dir = fig.querySelector('img').getAttribute('src').replace(/\.png$/, '');
+    let frames = null, run = 0;
+    function reset() { run++; if (frames) frames.forEach(f => { f.style.opacity = 0; }); }
+    async function play() {
+      const id = ++run;
+      if (!frames) {
+        frames = FRAMES.map(name => {
+          const im = document.createElement('img');
+          im.className = 'frame'; im.alt = ''; im.src = dir + '/' + name + '.png';
+          fig.appendChild(im);
+          return im;
+        });
+      }
+      for (const im of frames) {
+        await loaded(im);
+        if (id !== run) return;
+        im.style.opacity = 1;
+        await sleep(STEP_MS);
+        if (id !== run) return;
+      }
+      frames.forEach(f => { f.style.opacity = 0; });   // crossfade back to the final drawing
+    }
+    fig.addEventListener('mouseenter', play);
+    fig.addEventListener('mouseleave', reset);
+    fig.addEventListener('click', () => { reset(); play(); });
+  });
 })();
 </script>
 </body>
