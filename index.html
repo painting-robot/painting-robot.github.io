@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Painting Robot</title>
+  <meta name="description" content="Agent Behavior as a Driver for Novelty and Creativity in Human-Robot Co-Drawing. Video and gallery of co-drawings made with a physical robot and an online agent.">
+  <style>
+    :root {
+      --bg: #ffffff;
+      --fg: #1a1a1a;
+      --muted: #666666;
+      --line: #dddddd;
+      --accent: #e6e6e6;
+      --accent-hover: #d0d0d0;
+      color-scheme: light;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--fg);
+      font: 16px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    }
+    main { max-width: 1000px; margin: 0 auto; padding: 48px 16px 64px; }
+    header { text-align: center; margin-bottom: 32px; }
+    h1 { font-size: 1.9rem; font-weight: 600; margin: 0 0 8px; }
+    header p { margin: 0; color: var(--muted); font-size: 1.1rem; }
+    header .authors { margin-top: 12px; color: var(--fg); font-size: 1rem; }
+    header .affiliation { font-size: 1rem; }
+    h2 { font-size: 1.3rem; font-weight: 600; margin: 56px 0 8px; }
+    h3 { font-size: 1rem; font-weight: 600; margin: 32px 0 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; }
+    section > p { margin: 0 0 16px; color: var(--muted); }
+    video { display: block; width: 100%; height: auto; background: #000; border-radius: 4px; }
+    .grid { display: grid; gap: 12px; }
+    .grid img { width: 100%; height: auto; display: block; background: #fff; border: 1px solid var(--line); border-radius: 3px; }
+    .in-person { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .in-person img { aspect-ratio: 11 / 17; object-fit: contain; }
+    .online { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+    @media (max-width: 640px) {
+      .in-person { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      h1 { font-size: 1.5rem; }
+    }
+    /* Prompt-design grid */
+    .matrix {
+      display: grid;
+      grid-template-columns: auto auto auto minmax(0, 1fr) auto;
+      grid-template-areas: "prev yt yk tiles next" ". . . xk ." ". . . xt .";
+      column-gap: 10px; row-gap: 6px;
+      max-width: 800px; margin: 0 auto;
+    }
+    .matrix button {
+      align-self: stretch; width: 36px; padding: 0;
+      font: inherit; font-size: 1.2rem; line-height: 1;
+      background: var(--accent); color: var(--fg); border: 1px solid var(--accent); border-radius: 4px; cursor: pointer;
+    }
+    .matrix button:hover { background: var(--accent-hover); border-color: var(--accent-hover); }
+    .matrix #grid-prev { grid-area: prev; }
+    .matrix #grid-next { grid-area: next; }
+    .matrix .y-title { grid-area: yt; writing-mode: vertical-rl; transform: rotate(180deg); text-align: center; font-weight: 600; font-size: 1.15rem; }
+    .matrix .x-title { grid-area: xt; text-align: center; font-weight: 600; font-size: 1.15rem; }
+    .matrix .y-ticks { grid-area: yk; display: grid; grid-template-rows: repeat(3, minmax(0, 1fr)); gap: 8px; font-size: 1.05rem; color: var(--muted); }
+    .matrix .y-ticks span { writing-mode: vertical-rl; transform: rotate(180deg); align-self: center; justify-self: center; }
+    .matrix .x-ticks { grid-area: xk; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; text-align: center; font-size: 1.05rem; color: var(--muted); }
+    .matrix .tiles { grid-area: tiles; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+    .matrix .tiles img { width: 100%; height: auto; display: block; background: #fff; border: 1px solid var(--line); border-radius: 3px; }
+    .grid-nav { text-align: center; margin-top: 12px; color: var(--muted); font-variant-numeric: tabular-nums; }
+    a { color: inherit; text-decoration: underline; text-decoration-color: var(--line); text-underline-offset: 3px; }
+    a:hover { text-decoration-color: var(--fg); }
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>Gallery of Agent Behavior as a Driver for Novelty and Creativity in Human-Robot Co-Drawing</h1>
+    <p class="authors"><a href="https://art.cmu.edu/people/angelica-bonilla-fominaya/">Angelica M. Bonilla Fominaya</a>, <a href="https://daehwakim.com">Daehwa Kim</a>, Jack Mirenzi, Anisha Jog</p>
+    <p class="affiliation">Carnegie Mellon University</p>
+  </header>
+
+  <section id="video">
+    <video controls playsinline preload="metadata" poster="assets/video/poster.jpg">
+      <source src="assets/video/iros-painting-robot.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+      <a href="assets/video/iros-painting-robot.mp4">Download the video</a>.
+    </video>
+  </section>
+
+  <section id="prompt-grid" data-participants="6">
+    <h2>Describing Agent Behavior Via Prompt Design</h2>
+    <p>To describe a range of behaviors, we rely on intentional visual/semantic dissonance/congruence to provoke lateral problem-solving and break creative fixation.</p>
+    <div class="matrix">
+      <button type="button" id="grid-prev" aria-label="Previous participant">&larr;</button>
+      <div class="y-title">Visual</div>
+      <div class="y-ticks"><span>different</span><span>neutral</span><span>similar</span></div>
+      <div class="tiles">
+        <img src="assets/grid/p1_visual-different_semantic-similar.png" alt="Visual different, semantic similar" width="340" height="440">
+        <img src="assets/grid/p1_visual-different_semantic-neutral.png" alt="Visual different, semantic neutral" width="340" height="440">
+        <img src="assets/grid/p1_visual-different_semantic-different.png" alt="Visual different, semantic different" width="340" height="440">
+        <img src="assets/grid/p1_visual-neutral_semantic-similar.png" alt="Visual neutral, semantic similar" width="340" height="440">
+        <img src="assets/grid/p1_visual-neutral_semantic-neutral.png" alt="Visual neutral, semantic neutral" width="340" height="440">
+        <img src="assets/grid/p1_visual-neutral_semantic-different.png" alt="Visual neutral, semantic different" width="340" height="440">
+        <img src="assets/grid/p1_visual-similar_semantic-similar.png" alt="Visual similar, semantic similar" width="340" height="440">
+        <img src="assets/grid/p1_visual-similar_semantic-neutral.png" alt="Visual similar, semantic neutral" width="340" height="440">
+        <img src="assets/grid/p1_visual-similar_semantic-different.png" alt="Visual similar, semantic different" width="340" height="440">
+      </div>
+      <button type="button" id="grid-next" aria-label="Next participant">&rarr;</button>
+      <div class="x-ticks"><span>similar</span><span>neutral</span><span>different</span></div>
+      <div class="x-title">Semantic</div>
+    </div>
+    <div class="grid-nav"><span id="grid-counter">1 / 6</span></div>
+  </section>
+
+  <section id="in-person">
+    <h2>Co-drawing Outputs from the Physical Robot Agent</h2>
+    <p>Co-drawings made in person: participants and a robot arm took turns drawing on the same sheet of paper.</p>
+    <div class="grid in-person">
+      <img src="assets/in-person/p1_1.jpg" alt="Co-drawing with the physical robot" width="1035" height="1600" loading="lazy">
+      <img src="assets/in-person/p1_2.jpg" alt="Co-drawing with the physical robot" width="1035" height="1600" loading="lazy">
+      <img src="assets/in-person/p2_1.jpg" alt="Co-drawing with the physical robot" width="1035" height="1600" loading="lazy">
+      <img src="assets/in-person/p2_2.jpg" alt="Co-drawing with the physical robot" width="1035" height="1600" loading="lazy">
+      <img src="assets/in-person/p3_1.jpg" alt="Co-drawing with the physical robot" width="1035" height="1600" loading="lazy">
+      <img src="assets/in-person/p3_2.jpg" alt="Co-drawing with the physical robot" width="1035" height="1600" loading="lazy">
+      <img src="assets/in-person/p4_1.jpg" alt="Co-drawing with the physical robot" width="1112" height="1600" loading="lazy">
+      <img src="assets/in-person/p4_2.jpg" alt="Co-drawing with the physical robot" width="1216" height="1600" loading="lazy">
+    </div>
+  </section>
+
+  <section id="online">
+    <h2>Co-drawing Output with Online Agent</h2>
+    <p>Final canvases after two rounds of turn-taking with a vision-language-model agent. In the adversarial condition the agent tried to steer the drawing away from the participant's intent; in the control condition it did not.</p>
+
+    <h3>Adversarial</h3>
+    <div class="grid online">
+      <img src="assets/online/adversarial/01.png" alt="Robot drawing (adversarial)" width="340" height="440" loading="lazy">
+      <img src="assets/online/adversarial/02.png" alt="Robot drawing (adversarial)" width="340" height="440" loading="lazy">
+      <img src="assets/online/adversarial/03.png" alt="Robot drawing (adversarial)" width="340" height="440" loading="lazy">
+      <img src="assets/online/adversarial/04.png" alt="Robot drawing (adversarial)" width="340" height="440" loading="lazy">
+      <img src="assets/online/adversarial/05.png" alt="Robot drawing (adversarial)" width="340" height="440" loading="lazy">
+      <img src="assets/online/adversarial/06.png" alt="Robot drawing (adversarial)" width="340" height="440" loading="lazy">
+      <img src="assets/online/adversarial/07.png" alt="Robot drawing (adversarial)" width="340" height="440" loading="lazy">
+      <img src="assets/online/adversarial/08.png" alt="Robot drawing (adversarial)" width="340" height="440" loading="lazy">
+      <img src="assets/online/adversarial/09.png" alt="Robot drawing (adversarial)" width="340" height="440" loading="lazy">
+      <img src="assets/online/adversarial/10.png" alt="Robot drawing (adversarial)" width="340" height="440" loading="lazy">
+      <img src="assets/online/adversarial/11.png" alt="Robot drawing (adversarial)" width="340" height="440" loading="lazy">
+      <img src="assets/online/adversarial/12.png" alt="Robot drawing (adversarial)" width="340" height="440" loading="lazy">
+      <img src="assets/online/adversarial/13.png" alt="Robot drawing (adversarial)" width="340" height="440" loading="lazy">
+      <img src="assets/online/adversarial/14.png" alt="Robot drawing (adversarial)" width="340" height="440" loading="lazy">
+      <img src="assets/online/adversarial/15.png" alt="Robot drawing (adversarial)" width="340" height="440" loading="lazy">
+      <img src="assets/online/adversarial/16.png" alt="Robot drawing (adversarial)" width="340" height="440" loading="lazy">
+      <img src="assets/online/adversarial/17.png" alt="Robot drawing (adversarial)" width="340" height="440" loading="lazy">
+      <img src="assets/online/adversarial/18.png" alt="Robot drawing (adversarial)" width="340" height="440" loading="lazy">
+      <img src="assets/online/adversarial/19.png" alt="Robot drawing (adversarial)" width="340" height="440" loading="lazy">
+      <img src="assets/online/adversarial/20.png" alt="Robot drawing (adversarial)" width="340" height="440" loading="lazy">
+      <img src="assets/online/adversarial/21.png" alt="Robot drawing (adversarial)" width="340" height="440" loading="lazy">
+      <img src="assets/online/adversarial/22.png" alt="Robot drawing (adversarial)" width="340" height="440" loading="lazy">
+      <img src="assets/online/adversarial/23.png" alt="Robot drawing (adversarial)" width="340" height="440" loading="lazy">
+      <img src="assets/online/adversarial/24.png" alt="Robot drawing (adversarial)" width="340" height="440" loading="lazy">
+      <img src="assets/online/adversarial/25.png" alt="Robot drawing (adversarial)" width="340" height="440" loading="lazy">
+      <img src="assets/online/adversarial/26.png" alt="Robot drawing (adversarial)" width="340" height="440" loading="lazy">
+      <img src="assets/online/adversarial/27.png" alt="Robot drawing (adversarial)" width="340" height="440" loading="lazy">
+      <img src="assets/online/adversarial/28.png" alt="Robot drawing (adversarial)" width="340" height="440" loading="lazy">
+    </div>
+
+    <h3>Control</h3>
+    <div class="grid online">
+      <img src="assets/online/control/01.png" alt="Robot drawing (control)" width="340" height="440" loading="lazy">
+      <img src="assets/online/control/02.png" alt="Robot drawing (control)" width="340" height="440" loading="lazy">
+      <img src="assets/online/control/03.png" alt="Robot drawing (control)" width="340" height="440" loading="lazy">
+      <img src="assets/online/control/04.png" alt="Robot drawing (control)" width="340" height="440" loading="lazy">
+      <img src="assets/online/control/05.png" alt="Robot drawing (control)" width="340" height="440" loading="lazy">
+      <img src="assets/online/control/06.png" alt="Robot drawing (control)" width="340" height="440" loading="lazy">
+      <img src="assets/online/control/07.png" alt="Robot drawing (control)" width="340" height="440" loading="lazy">
+      <img src="assets/online/control/08.png" alt="Robot drawing (control)" width="340" height="440" loading="lazy">
+      <img src="assets/online/control/09.png" alt="Robot drawing (control)" width="340" height="440" loading="lazy">
+      <img src="assets/online/control/10.png" alt="Robot drawing (control)" width="340" height="440" loading="lazy">
+      <img src="assets/online/control/11.png" alt="Robot drawing (control)" width="340" height="440" loading="lazy">
+      <img src="assets/online/control/12.png" alt="Robot drawing (control)" width="340" height="440" loading="lazy">
+      <img src="assets/online/control/13.png" alt="Robot drawing (control)" width="340" height="440" loading="lazy">
+      <img src="assets/online/control/14.png" alt="Robot drawing (control)" width="340" height="440" loading="lazy">
+      <img src="assets/online/control/15.png" alt="Robot drawing (control)" width="340" height="440" loading="lazy">
+      <img src="assets/online/control/16.png" alt="Robot drawing (control)" width="340" height="440" loading="lazy">
+      <img src="assets/online/control/17.png" alt="Robot drawing (control)" width="340" height="440" loading="lazy">
+      <img src="assets/online/control/18.png" alt="Robot drawing (control)" width="340" height="440" loading="lazy">
+      <img src="assets/online/control/19.png" alt="Robot drawing (control)" width="340" height="440" loading="lazy">
+      <img src="assets/online/control/20.png" alt="Robot drawing (control)" width="340" height="440" loading="lazy">
+      <img src="assets/online/control/21.png" alt="Robot drawing (control)" width="340" height="440" loading="lazy">
+      <img src="assets/online/control/22.png" alt="Robot drawing (control)" width="340" height="440" loading="lazy">
+      <img src="assets/online/control/23.png" alt="Robot drawing (control)" width="340" height="440" loading="lazy">
+      <img src="assets/online/control/24.png" alt="Robot drawing (control)" width="340" height="440" loading="lazy">
+      <img src="assets/online/control/25.png" alt="Robot drawing (control)" width="340" height="440" loading="lazy">
+      <img src="assets/online/control/26.png" alt="Robot drawing (control)" width="340" height="440" loading="lazy">
+      <img src="assets/online/control/27.png" alt="Robot drawing (control)" width="340" height="440" loading="lazy">
+      <img src="assets/online/control/28.png" alt="Robot drawing (control)" width="340" height="440" loading="lazy">
+    </div>
+  </section>
+</main>
+<script>
+(function () {
+  const section = document.getElementById('prompt-grid');
+  const N = parseInt(section.dataset.participants, 10);
+  const V = ['different', 'neutral', 'similar'];   // rows, top to bottom
+  const S = ['similar', 'neutral', 'different'];   // columns, left to right
+  const tiles = section.querySelectorAll('.tiles img');
+  const counter = document.getElementById('grid-counter');
+  const src = (p, v, s) => 'assets/grid/p' + p + '_visual-' + v + '_semantic-' + s + '.png';
+  let i = 0;
+  function show(k) {
+    i = ((k % N) + N) % N;
+    tiles.forEach((img, t) => { img.src = src(i + 1, V[Math.floor(t / 3)], S[t % 3]); });
+    counter.textContent = (i + 1) + ' / ' + N;
+  }
+  document.getElementById('grid-prev').addEventListener('click', () => show(i - 1));
+  document.getElementById('grid-next').addEventListener('click', () => show(i + 1));
+
+  // Preload every participant's tiles so switching is instant.
+  for (let p = 1; p <= N; p++) V.forEach(v => S.forEach(s => { new Image().src = src(p, v, s); }));
+})();
+</script>
+</body>
+</html>
